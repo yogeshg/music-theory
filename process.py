@@ -13,7 +13,7 @@ def encode_images_to_files(display_data_json):
                 metadata["image/png"] = {}
             if not metadata.get("image/png").has_key("location"):
                 metadata["image/png"]["location"] = "images/auto_" + uuid.uuid4().hex + ".png"
-                sys.stderr.write("git add {}".format(metadata["image/png"]["location"]))
+                sys.stderr.write("git add {}\n".format(metadata["image/png"]["location"]))
             location = metadata.get("image/png").get("location")
             with open(location, 'wb') as fout:
                 # remove from data and write to the file
