@@ -17,7 +17,8 @@ def encode_images_to_files(display_data_json):
             location = metadata.get("image/png").get("location")
             with open(location, 'wb') as fout:
                 # remove from data and write to the file
-                fout.write(base64.b64decode(data.pop("image/png")))
+                fout.write(base64.b64decode(data["image/png"]))
+                data["image/png"] = ''
         display_data_json["metadata"] = metadata
         display_data_json["data"] = data
     return display_data_json
@@ -28,7 +29,7 @@ def decode_images_from_files(display_data_json):
         metadata = display_data_json.get("metadata")
         data = display_data_json.get("data")
         if metadata.has_key("image/png"):
-            if not data.has_key("image/png") and metadata["image/png"].has_key("location"):
+            if (not data.has_key("image/png") or len(data["image/png"])) and metadata["image/png"].has_key("location"):
                 location = metadata.get("image/png").get("location")
                 with open(location, 'rb') as fin:
                     data["image/png"] = fin.read().encode('base64')
