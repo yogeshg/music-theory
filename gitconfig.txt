@@ -1,0 +1,19 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "yogeshg"]
+	url = git@github.com:yogeshg/music-theory.git
+	fetch = +refs/heads/*:refs/remotes/yogeshg/*
+[remote "origin"]
+	url = https://github.com/yogeshg/music-theory.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+
+[filter "nb_images"]
+	clean = "python process.py encode"
+	smudge = "python process.py decode"
+	required = true
+
