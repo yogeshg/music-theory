@@ -18,7 +18,7 @@ def encode_images_to_files(display_data_json):
             with open(location, 'wb') as fout:
                 # remove from data and write to the file
                 fout.write(base64.b64decode(data["image/png"]))
-                data["image/png"] = ''
+                data["image/png"] = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNgAAAAAgABSK+kcQAA\nAABJRU5ErkJggg=='
         display_data_json["metadata"] = metadata
         display_data_json["data"] = data
     return display_data_json
