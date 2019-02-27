@@ -3,6 +3,8 @@ import sys
 import json
 import base64
 
+DUMMY_IMAGE = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNgAAAAAgABSK+kcQAA\nAABJRU5ErkJggg=='
+
 def encode_images_to_files(display_data_json):
     # sys.stderr.write("encoding\n")
     if display_data_json.get("output_type", None) == "display_data":
@@ -18,7 +20,7 @@ def encode_images_to_files(display_data_json):
             with open(location, 'wb') as fout:
                 # remove from data and write to the file
                 fout.write(base64.b64decode(data["image/png"]))
-                data["image/png"] = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVR4nGNgAAAAAgABSK+kcQAA\nAABJRU5ErkJggg=='
+                data["image/png"] = DUMMY_IMAGE
         display_data_json["metadata"] = metadata
         display_data_json["data"] = data
     return display_data_json
@@ -29,7 +31,7 @@ def decode_images_from_files(display_data_json):
         metadata = display_data_json.get("metadata")
         data = display_data_json.get("data")
         if metadata.has_key("image/png"):
-            if (not data.has_key("image/png") or len(data["image/png"])) and metadata["image/png"].has_key("location"):
+            if (not data.has_key("image/png") or len(data["image/png"]) or data["image/png"]==DUMMY_IMAGE) and metadata["image/png"].has_key("location"):
                 location = metadata.get("image/png").get("location")
                 with open(location, 'rb') as fin:
                     data["image/png"] = fin.read().encode('base64')
